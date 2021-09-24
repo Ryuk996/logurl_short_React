@@ -117,15 +117,15 @@ function Drive(props) {
             <div class="navigation">
                             <button onClick={() => handleLogout} class="button" type="submit" value="Logout" ><div class="logout">LOGOUT</div></button>
                         </div><br></br>
+                        
             <div className='row'>
-            
-                <main class="form-signin">
+            <main class="form-signin">
                     <div className="col-lg-12 text center">
                         {err && showErrMsg(err)}
                         {success && showSuccessMsg(success)}
                         <h1>URL shortner</h1>
                     </div>
-                </main>
+                    </main>
             </div>
             <form onSubmit={(e) => {
                 handleSubmit(e);
