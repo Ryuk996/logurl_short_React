@@ -32,12 +32,12 @@ function Register() {
         try {
             let registerData = await axios.post(`${env.api}/user/register`,{firstName,lastName,userName,password})
             setUser({...user, err: '', success: registerData.data.msg})
-            history.push("/")
+            
         } catch (err) {
             err.response.data.msg &&
             setUser({...user, err: err.response.data.msg, success: ''})
         }
-        // await axios.post(`${env.api}/register`,{userName,password})
+        
         
     }
     return (

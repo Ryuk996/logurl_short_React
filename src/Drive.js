@@ -35,57 +35,38 @@ function Drive(props) {
 
 
     }
-    // useEffect(async () => {
-    //     try {
-    //         let url = await axios.get(`${env.api}/url/showUrl`)
-
-    //         setUrl([...url.data])
-
-    //         setLoading(false)
-    //     }
-    //     catch (error) {
-    //         console.log(error);
-    //         setLoading(false)
-    //     }
-
-
-    // }, [])
-
-    let handleSubmit = async (e) => {
+   
+    let handleSubmit = async (e,id) => {
 
         e.preventDefault()
         try {
-            let createurl = await axios.post(`${env.api}/url/createUrl`, { urlLink })
-            // setUrl([...createurl.data])
-            // console.log(createurl.data)
-            // let rowIndex = showUrls.findIndex(obj => obj.id==id);
-            // showUrls.values(rowIndex,1);
-            // setUrl([...showUrls])
-            // // window.location.reload()
+            let createurl = await axios.post(`${env.api}/url/createUrl`, { urlLink },
+            {
+                headers : {
+                    "Authorization" : window.localStorage.getItem("firstlogin")
+                }
+            }
+            )
             setUser({ ...user, err: '', success: createurl.data.msg })
             console.log(createurl)
             setUrlLink("")
             fetchUrl();
 
-
-            // window.location.href = "/";
-
         } catch (err) {
             err.response.data.msg &&
                 setUser({ ...user, err: err.response.data.msg, success: '' })
-            // window.location.href = "/";
+            
         }
 
     }
 
-    let handleLogout = async (e) => {
-        e.preventDefault()
-
+    let handleLogout = async () => {
+        
         try {
             let logout = await axios.get(`${env.api}/user/logout`)
             window.localStorage.removeItem('firstlogin')
             setUser({ ...user, err: '', success: logout.data.msg })
-            // window.location.href = "/";
+            
             history.push('/')
         } catch (err) {
             err.response.data.msg &&
@@ -98,7 +79,6 @@ function Drive(props) {
         let confirm = window.confirm("Are you sure want to delete ?")
         if (confirm) {
             try {
-                // let deleteaTask =await axios.delete(`http://localhost:3002/delete-task/${id}`)
                 let deleteaTask = await axios.get(`${env.api}/url/delete/${id}`)
                 setUser({ ...user, err: '', success: deleteaTask.data.msg })
                 let rowIndex = showUrls.findIndex(obj => obj.id == id);
@@ -115,7 +95,7 @@ function Drive(props) {
 
         <div className="container">
             <div class="navigation">
-                            <button onClick={() => handleLogout} class="button" type="submit" value="Logout" ><div class="logout">LOGOUT</div></button>
+                            <button onClick={() => handleLogout()} class="button" type="submit" value="Logout" ><div class="logout">LOGOUT</div><i class="far fa-hand-point-up" style={{justifyContent:"center"}}></i></button>
                         </div><br></br>
                         
             <div className='row'>

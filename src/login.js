@@ -26,22 +26,21 @@ function Login() {
         e.preventDefault()
         try {
             const loginData= await axios.post(`${env.api}/user/login`,{userName,password})
-            setUser({...user, err: '', success: loginData.data.msg})
-            window.localStorage.setItem('firstlogin',true)
-
+            // setUser({...user, err: '', success: loginData.data.msg})
+            window.localStorage.setItem("firstlogin",loginData.data.aToken)
+            // console.log(loginData.data.msg)
             // alert(loginData.data.message)
             history.push("/drive")
         } catch (err) {
-            // console.log(error)
             err.response.data.msg &&
             setUser({...user, err: err.response.data.msg, success: ''})
         }
-        // await axios.post(`${env.api}/register`,{userName,password})
+        
         
     }
     return (
         <>
-        {/* <h1>login</h1> */}
+        
         <body class="text-center">
             <main class="form-signin">
                 <form onSubmit={(e) => {
